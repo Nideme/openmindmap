@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Mind Map Demo</title>
+  <style>
+    /* CSS styles for the mind map */
+    #mind-map {
+      width: 100%;
+      height: 400px;
+      background-image: url('neural-network-mind-map.jpg');
+      background-size: cover;
+      position: relative;
+    }
+    
+    /* CSS styles for the search field */
+    #search-field {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    /* CSS styles for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+    }
+    
+    /* CSS styles for the categories within the modal */
+    .modal-category {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mind-map"></div>
+  
+  <div id="search-field">
+    <input type="text" placeholder="Search for a concept" />
+  </div>
+  
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <img src="concept-image.jpg" alt="Concept Image" />
+      <h2>Concept Name</h2>
+      <p>Short description of the concept.</p>
+      
+      <div class="modal-category">
+        <h3>Scientific Evidence</h3>
+        <!-- Rating bar for scientific evidence -->
+      </div>
+      
+      <div class="modal-category">
+        <h3>Human Experience and Belief</h3>
+        <!-- Rating bar for human experience and belief -->
+      </div>
+      
+      <div class="modal-category">
+        <h3>Questions</h3>
+        <!-- Display and rate questions related to the concept -->
+      </div>
+      
+      <div class="modal-category">
+        <h3>Further Reading</h3>
+        <!-- Display and rate videos/links for further reading -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // JavaScript code for handling interactions and functionality
+    // You will need to add appropriate event listeners and implement the necessary functionality
+    
+    // Code for zooming in on a concept when selected from the search suggestions
+    // and displaying the modal with relevant information
+    
+    // Code for rating scientific evidence, human experience and belief, questions, and further reading
+    
+  </script>
+</body>
+</html>
+
