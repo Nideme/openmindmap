@@ -6,109 +6,248 @@
     /* CSS styles for the mind map */
     #mind-map {
       width: 100%;
-    
     }
 
     body {
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
 
     #logo {
-            text-align: center;
-            margin-top:10%;
-        }
-        #logo img {
-            width: 100%;
-        }
-    
+      text-align: center;
+    }
+
+    #logo img {
+      width: 100%;
+    }
 
     /* CSS styles for the search field */
     #search-field {
       display: flex;
       justify-content: center;
-      position: relative;
-      size: 50%;
-      z-index: 2;
-      margin-top: -25%;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-    
+
+    /* CSS styles for the dropdown */
+    .dropdown-content {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      background-color: #201d1d;
+      z-index: 3;
+      display: none;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+
     /* CSS styles for the modal */
     .modal {
       display: none;
       position: fixed;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 40px;
-    }
-    
-    .modal-content {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
       background-color: #fff;
       border-radius: 5px;
       padding: 20px;
     }
-    
+
+    /* CSS styles for the modal image */
+    .modal-image {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
     /* CSS styles for the categories within the modal */
     .modal-category {
       margin-bottom: 20px;
     }
+
+    .modal.show {
+      display: block;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .close-button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: black;
+
+    }
   </style>
 </head>
 <body>
- 
-
   <div id="logo">
-    <img src="OMM_BG.001.jpeg" alt="Logo">
+    <img src="OMM_BG/OMM_BG.001.jpeg" alt="Logo">
   </div>
-  
+
   <div id="search-field">
-    <input type="text" placeholder="Search for a concept" />
+    <input type="text" placeholder="Search for a concept" id="search-input" autocomplete="off" />
+    <div id="dropdown" class="dropdown-content"></div>
   </div>
-  
+
   <div id="modal" class="modal">
-    <div class="modal-content">
-      <img src="concept-image.jpg" alt="Concept Image" />
-      <h2>Concept Name</h2>
-      <p>Short description of the concept.</p>
-      
-      <div class="modal-category">
-        <h3>Scientific Evidence</h3>
-        <!-- Rating bar for scientific evidence -->
-      </div>
-      
-      <div class="modal-category">
-        <h3>Human Experience and Belief</h3>
-        <!-- Rating bar for human experience and belief -->
-      </div>
-      
-      <div class="modal-category">
-        <h3>Questions</h3>
-        <!-- Display and rate questions related to the concept -->
-      </div>
-      
-      <div class="modal-category">
-        <h3>Further Reading</h3>
-        <!-- Display and rate videos/links for further reading -->
-      </div>
+    <span id="close-button" class="close-button">X</span>
+    <img id="modal-image" class="modal-image" src="" alt="Concept Image" />
+    <h2 id="modal-title">Concept Name</h2>
+    <p id="modal-description">Short description of the concept.</p>
+
+    <div class="modal-category">
+      <h3>Scientific Evidence</h3>
+      <!-- Rating bar for scientific evidence -->
+    </div>
+
+    <div class="modal-category">
+      <h3>Human Experience and Belief</h3>
+      <!-- Rating bar for human experience and belief -->
+    </div>
+
+    <div class="modal-category">
+      <h3>Questions</h3>
+      <!-- Display and rate questions related to the concept -->
+    </div>
+
+    <div class="modal-category">
+      <h3>Further Reading</h3>
+      <!-- Display and rate videos/links for further reading -->
     </div>
   </div>
-  
+
   <script>
     // JavaScript code for handling interactions and functionality
-    // You will need to add appropriate event listeners and implement the necessary functionality
-    
-    // Code for zooming in on a concept when selected from the search suggestions
-    // and displaying the modal with relevant information
-    
-    // Code for rating scientific evidence, human experience and belief, questions, and further reading
-    
+
+    // Sample suggestions for demonstration purposes
+    const suggestions = [
+      "Quantum mechanics",
+      "Climate change",
+      "Immunization through vaccination",
+      "Reiki"
+    ];
+
+    // Get DOM elements
+    const searchInput = document.getElementById("search-input");
+    const dropdown = document.getElementById("dropdown");
+    const modal = document.getElementById("modal");
+    const modalImage = document.getElementById("modal-image");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDescription = document.getElementById("modal-description");
+
+    // Function to display the dropdown with suggestions
+    function showDropdown() {
+      dropdown.style.display = "block";
+    }
+
+    // Function to hide the dropdown
+    function hideDropdown() {
+      dropdown.style.display = "none";
+    }
+
+    // Function to handle search input and display suggestions
+    function handleSearchInput() {
+      const searchQuery = searchInput.value.toLowerCase();
+      const matchedSuggestions = suggestions.filter(suggestion =>
+        suggestion.toLowerCase().includes(searchQuery)
+      );
+
+      // Clear previous suggestions
+      dropdown.innerHTML = "";
+
+      // Display matched suggestions
+      matchedSuggestions.forEach(suggestion => {
+        const suggestionItem = document.createElement("div");
+        suggestionItem.classList.add("dropdown-item");
+        suggestionItem.textContent = suggestion;
+        suggestionItem.addEventListener("click", () => {
+          openModal(suggestion);
+        });
+        dropdown.appendChild(suggestionItem);
+      });
+
+      // Show or hide the dropdown based on search input
+      matchedSuggestions.length > 0 ? showDropdown() : hideDropdown();
+    }
+
+// Function to open the modal for a specific concept
+
+
+function closeModal(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Function to open the modal for a specific concept
+    function openModal(concept) {
+      // Update modal content based on the selected concept
+      const imagePath = `QM_OMM/QM_OMM.001.jpeg`;
+      modalImage.src = imagePath;
+      modalTitle.textContent = concept;
+      modalDescription.textContent = `Short description of ${concept}.`;
+
+      // Show the modal
+      modal.style.display = "block";
+      modal.classList.add("show");  // Add class to modal
+    }
+
+    // Close the modal when you click outside of it
+    window.addEventListener("click", closeModal);
+
+    // Function to hide the dropdown with a delay
+    function hideDropdownWithDelay() {
+      setTimeout(() => {
+        hideDropdown();
+      }, 300);  // 300ms delay before hiding the dropdown
+    }
+    const closeButton = document.getElementById("close-button");
+
+// Function to close the modal when the close button is clicked
+function handleCloseButtonClick() {
+  modal.style.display = "none";
+  modal.classList.remove("show");
+}
+
+// Add event listener to the close button
+closeButton.addEventListener("click", handleCloseButtonClick);
+    // Event listeners for search input
+    searchInput.addEventListener("input", handleSearchInput);
+    searchInput.addEventListener("blur", hideDropdownWithDelay);
+
+   
   </script>
 </body>
 </html>
+
+
+
+
+
+
